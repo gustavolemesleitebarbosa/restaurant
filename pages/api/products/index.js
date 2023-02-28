@@ -17,9 +17,9 @@ export default async function handler(req, res) {
 
    }
    if(method==='POST'){
-    if(!token || token.env.token){
-      return res.status(401).json("Not authorized")
-    }
+    // if(!token){
+    //   return res.status(401).json("Not authorized")
+    // }
     try{
       const product = await Product.create(req.body)
       res.status(201).json(product)

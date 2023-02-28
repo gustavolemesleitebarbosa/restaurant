@@ -4,7 +4,7 @@ import styles from '../styles/Footer.module.css'
 
 const Footer = () => {
   return (
-    <div className={styles.container}>
+    <div id={'footer'} className={styles.container}>
       <div className={styles.item}>
         <Image src="/img/bg.png" fill style={{objectFit:'cover'}} alt="" />
       </div>

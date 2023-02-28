@@ -25,12 +25,10 @@ const Navbar = () => {
         <Link href="/" >
           <li className={styles.listItem}>Homepage</li>
         </Link>
-          <li className={styles.listItem}>Products</li>
-          <li className={styles.listItem}>Menu</li>
-          <Image src={logo} alt ="" width="160" height="69"/>
-          <li className={styles.listItem}>Events</li>
-          <li className={styles.listItem}>Blog</li>
-          <li className={styles.listItem}>Contact</li>
+           <Link href={`/#order_online`} className={styles.listItem}>Order online</Link>
+          <Image src={logo} alt ="" width="218" height="50"/>
+          <Link href={`#footer`} className={styles.listItem}> Come to our units</Link>
+          <Link href='/cart' className={styles.listItem}> Go to cart </Link>
         </ul>
       </div>
       <Link href="/cart" >

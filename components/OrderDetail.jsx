@@ -12,7 +12,7 @@ const OrderDetail = ({ total, createOrder, setCash }) => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-      <span onClick={() => setCash(false)} className={styles.close}>
+       <span onClick={() => setCash(false)} className={styles.close}>
           X
         </span>
         <h1 className={styles.title}>You will pay $12 after delivery.</h1>

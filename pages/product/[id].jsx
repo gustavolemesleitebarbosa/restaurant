@@ -1,10 +1,10 @@
 import axios from 'axios'
 import Image from 'next/image'
 import React, { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { addProduct } from '../../redux/cartSlice'
 import styles from '../../styles/Product.module.css'
-
 
 const Product = ({ pizza }) => {
 
@@ -38,9 +38,11 @@ const Product = ({ pizza }) => {
   
   const handleClick =() =>{
     dispatch(addProduct({...pizza, extras, price, quantity}))
+    toast("Product added successfully")
   }
 
-  return (
+  return (<>
+    <Toaster  />
     <div className={styles.container}>
       <div className={styles.left}>
         <div className={styles.imgContainer}>
@@ -50,7 +52,7 @@ const Product = ({ pizza }) => {
       <div className={styles.right}>
         <h1 className={styles.title}>{pizza.title}</h1>
         <span className={styles.price}>${price}</span>
-        <p className={styles.desc}>${pizza.desc}</p>
+        <p className={styles.desc}>{pizza.desc}</p>
         <h3 className={styles.choose}> Choose the size</h3>
         <div className={styles.sizes}>
           <div className={styles.size} onClick={() => handleSize(0)}>
@@ -79,12 +81,13 @@ const Product = ({ pizza }) => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 
 export const getServerSideProps = async ({ params }) => {
 
-  const res = await axios.get(`http://localhost:3000/api/products/${params.id}`)
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products/${params.id}`)
   return {
     props: {
       pizza: res.data

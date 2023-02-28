@@ -152,6 +152,20 @@
   flex-direction: column;
 }
 
+.emptyCart{
+  width: 100%;
+  display:  flex;
+  align-items: center;
+  font-size: xxx-large;
+  justify-content: center;
+  height: calc(100vh - 200px);
+}
+
+.homepageText{
+ color: #d1411e;
+ cursor: pointer;
+}
+
 .payButton {
   padding: 10px 5px;
   cursor: pointer;

@@ -3,12 +3,14 @@ import {
 } from "@paypal/react-paypal-js";
 import axios from "axios";
 import Image from 'next/image';
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import OrderDetail from "../components/OrderDetail";
 import { reset } from '../redux/cartSlice';
 import styles from '../styles/Cart.module.css';
+
 
 const Cart = () => {
 
@@ -23,10 +25,11 @@ const Cart = () => {
 
 
   const createOrder = async (data) => {
+    console.log('test url',`${process.env.NEXT_PUBLIC_BASE_URL.toString()}/api/orders`)
     try {
-      const res = await axios.post("http://localhost:3000/api/orders", data)
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/orders`, data)
       res.statusCode = 201 && router.push("/orders/" + res.data._id)
-      dispatch(reset())
+      dispatch(reset()) 
     }
     catch (err) {
       console.error('error over here', err);
@@ -48,7 +51,6 @@ const Cart = () => {
         },
       });
     }, [currency, showSpinner]);
-
 
     return (<>
       {(showSpinner && isPending) && <div className="spinner" />}
@@ -77,7 +79,6 @@ const Cart = () => {
         onApprove={function (data, actions) {
           return actions.order.capture().then(function (details) {
             const shipping = details.purchase_units[0].shipping;
-            console.log('shipping over here', shipping);
             createOrder({
               customer: shipping.name.full_name,
               address: shipping.address.address_line_1,
@@ -91,96 +92,118 @@ const Cart = () => {
     );
   }
 
-  return (
+  return (<>
     <div className={styles.container}>
-      <div className={styles.left}>
-        <table className={styles.table}>
-          <thead>
-            <tr className={styles.trTitle}>
-              <th>Product</th>
-              <th>Name</th>
-              <th>Extras</th>
-              <th>Price</th>
-              <th> Quantity</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cart.products.map((product) => (
-              <tr className={styles.tr} key={product._id}>
-                <td>
-                  <div className={styles.imgContainer} >
-                    <Image src={product.img} fill style={{ objectFit: "cover" }} alt="" />
-                  </div>
-                </td>
-                <td>
-                  <div className={styles.name} >
-                    {product.title}
-                  </div>
-                </td>
-                <td>
-                  <span className={styles.extras} >
-                    {product.extras.map((extra) => (<span key={extra._id}>{extra.text}, </span>))}
-                  </span>
-                </td>
-                <td>
-                  <span className={styles.price} >
-                    {product.price}
-                  </span>
-                </td>
-                <td>
-                  <span className={styles.quantity} >
-                    {product.quantity}
-                  </span>
-                </td>
-                <td>
-                  <span className={styles.total} >
-                    {product.price * product.quantity}
-                  </span>
-                </td>
-              </tr>
+      {cart.products.length ?
+        <>
+          <div className={styles.left}>
+            <table className={styles.table}>
+              <thead>
+                <tr className={styles.trTitle}>
+                  <th>Product</th>
+                  <th>Name</th>
+                  <th>Extras</th>
+                  <th>Price</th>
+                  <th> Quantity</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cart.products.map((product) => (
+                  <tr className={styles.tr} key={product._id}>
+                    <td>
+                      <div className={styles.imgContainer} >
+                        <Image src={product.img} fill style={{ objectFit: "cover" }} alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div className={styles.name} >
+                        {product.title}
+                      </div>
+                    </td>
+                    <td>
+                      <span className={styles.extras} >
+                        {product.extras.map((extra) => (<span key={extra._id}>{extra.text}, </span>))}
+                      </span>
+                    </td>
+                    <td>
+                      <span className={styles.price} >
+                        {product.price}
+                      </span>
+                    </td>
+                    <td>
+                      <span className={styles.quantity} >
+                        {product.quantity}
+                      </span>
+                    </td>
+                    <td>
+                      <span className={styles.total} >
+                        {product.price * product.quantity}
+                      </span>
+                    </td>
+                  </tr>
 
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className={styles.right}>
-        <div className={styles.wrapper}>
-          <h2 className={styles.title}>CART TOTAL</h2>
-          <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Subtotal:</b>{cart.total}
+                ))}
+              </tbody>
+            </table>
           </div>
-          <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Discount:</b>$0.00
-          </div>
-          <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Total:</b>{cart.total}
-          </div>
-          {open ? (
-            <div className={styles.paymentMethods}>
-              <button className={styles.payButton} onClick={() => setCash(true)}>CASH ONDELIVERY</button>
-              <PayPalScriptProvider
-                options={{
-                  "client-id": "ASWqjIUc60Qb1ZaKtwOzTdgOE0aNfOuKA0Jz4sVGD-oi5RJ4Wa3y8rcPhLIsaWocUcr-uTbnRqBKKj7M",
-                  components: "buttons",
-                }}
-              >
-                <ButtonWrapper
-                  currency={currency}
-                  showSpinner={false}
-                />
-              </PayPalScriptProvider>
+
+          <div className={styles.right}>
+            <div className={styles.wrapper}>
+              <h2 className={styles.title}>CART TOTAL</h2>
+              <div className={styles.totalText}>
+                <b className={styles.totalTextTitle}>Subtotal:</b>{cart.total}
+              </div>
+              <div className={styles.totalText}>
+                <b className={styles.totalTextTitle}>Discount:</b>$0.00
+              </div>
+              <div className={styles.totalText}>
+                <b className={styles.totalTextTitle}>Total:</b>{cart.total}
+              </div>
+              {open ? (
+                <div className={styles.paymentMethods}>
+                  <button className={styles.payButton} onClick={() => setCash(true)}>CASH ONDELIVERY</button>
+                  <PayPalScriptProvider
+                    deferLoading={false}
+                    options={{
+                      "client-id": "ASWqjIUc60Qb1ZaKtwOzTdgOE0aNfOuKA0Jz4sVGD-oi5RJ4Wa3y8rcPhLIsaWocUcr-uTbnRqBKKj7M",
+                      components: "buttons",
+                    }}
+                  >
+                    <ButtonWrapper
+                      currency={currency}
+                      showSpinner={false}
+                    />
+                  </PayPalScriptProvider>
+                </div>
+              ) : (<button className={styles.payButton} onClick={() => {
+                setTimeout(() => {
+                  setOpen(true)
+                }, 400)
+                setTimeout(() => {
+                  setOpen(true)
+                }, 900)
+                setOpen(true)
+              }
+              }>CHECKOUT NOW!</button>)
+              }
             </div>
-          ) : (<button className={styles.payButton} onClick={() => setOpen(true)}>CHECKOUT NOW!</button>)
-          }
-        </div>
-      </div>
+          </div>
+        </> : <div className={styles.emptyCart}>
+          <span>Your cart is empty please add a product in the
+            <Link className={styles.homepageText} href="/#order_online">
+              {` Homepage`}
+            </Link>
+          </span>
+        </div>}
+
       {cash && (<OrderDetail
-      total ={cart.total}
-      createOrder ={createOrder}
-      setCash ={setCash}
+        total={cart.total}
+        createOrder={createOrder}
+        setCash={setCash}
       />)}
     </div>
+  </>
   )
 }
 
