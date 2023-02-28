@@ -2,6 +2,7 @@ import Product from "../../../models/Product";
 import dbConnect from "../../../util/mongo";
 
 export default async function handler(req, res) {
+  res.set('Access-Control-Allow-Origin', '*');
   const {method,
      query: {id},
      cookies
