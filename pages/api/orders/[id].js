@@ -3,7 +3,6 @@ import dbConnect from "../../../util/mongo";
 
 
 const handler = async (req, res) => {
-  // res.set('Access-Control-Allow-Origin', '*');
   const {
     method,
     query: {id},
