@@ -1,8 +1,9 @@
 import cookie from 'cookie';
 import NextCors from 'nextjs-cors';
 
-export default async function handler(req, res) {
- await NextCors(req, res, {
+const handler = async(req, res) => {
+
+  await NextCors(req, res, {
     // Options
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
     origin: '*',
@@ -28,3 +29,5 @@ export default async function handler(req, res) {
   }
 
 }
+
+export default handler;
