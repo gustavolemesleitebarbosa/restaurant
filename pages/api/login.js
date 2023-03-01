@@ -17,7 +17,10 @@ const handler = async(req, res) => {
     } = req.body
   
     if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
-      res.setHeader("Set-Cookie", cookie.serialize("token", process.env.TOKEN))
+      res.setHeader("Set-Cookie", cookie.serialize("token", process.env.TOKEN,{
+        path:'/',
+        secure: true
+      }))
       res.status(200).json("Sucessful")
     } else{
       res.status(400).json("Wrong credentials")
