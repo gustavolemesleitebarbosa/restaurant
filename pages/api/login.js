@@ -18,9 +18,8 @@ const handler = async(req, res) => {
   
     if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
       res.setHeader("Set-Cookie", cookie.serialize("token", process.env.TOKEN,{
-        maxAge: 60 * 60,
-        sameSite: 'strict',
-        path :"/"
+        maxAge: 60 * 3360,
+        path:'/'
       }))
       res.status(200).json("Sucessful")
     } else{
