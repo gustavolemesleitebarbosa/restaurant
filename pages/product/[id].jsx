@@ -13,6 +13,7 @@ const Product = ({ pizza }) => {
   const [quantity, setQuantity] = useState(1)
   const [extras, setExtras] = useState([])
   const dispatch = useDispatch()
+  console.log('pizza image', pizza.img)
 
   const changePrice =(number) => {
     setPrice(prevPrice =>prevPrice+number)
@@ -46,7 +47,7 @@ const Product = ({ pizza }) => {
     <div className={styles.container}>
       <div className={styles.left}>
         <div className={styles.imgContainer}>
-          <Image src={pizza.img} fill alt="" />
+          <Image style ={{ objectFit:"fit"}} src={pizza.img} fill alt="" />
         </div>
       </div>
       <div className={styles.right}>
