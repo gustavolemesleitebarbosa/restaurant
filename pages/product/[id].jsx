@@ -3,8 +3,10 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
+import PlaceholderImage from '../../components/PlaceholderImage'
 import { addProduct } from '../../redux/cartSlice'
 import styles from '../../styles/Product.module.css'
+
 
 const Product = ({ pizza }) => {
 
@@ -47,7 +49,9 @@ const Product = ({ pizza }) => {
     <div className={styles.container}>
       <div className={styles.left}>
         <div className={styles.imgContainer}>
-          <Image style ={{ objectFit:"fit"}} src={pizza.img} fill alt="" />
+          <div className={styles.imgContainerInner}>
+          <PlaceholderImage blur blurDataURL='/img/pizza.png' style ={{ objectFit:"contain"}} src={pizza.img}  alt="" />
+          </div>
         </div>
       </div>
       <div className={styles.right}>
