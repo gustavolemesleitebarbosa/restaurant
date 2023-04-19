@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 
 const Shimmer = () => {
   const shimmerStyle = {
-    width: '63%',
-    height: '63%',
+    width: '71%',
+    height: '71%',
     borderRadius: '50%',
     backgroundImage: 'linear-gradient(-45deg, #fff 25%, #f0f0f0 25%, #f0f0f0 50%, #fff 50%, #fff 75%, #f0f0f0 75%, #f0f0f0 100%)',
     backgroundSize: '400% 400%',
