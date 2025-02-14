@@ -1,3 +1,7 @@
+This is a pizza restaurant application created with a NextJs project and using Redux for global state managent, and also with Paypal integration for
+payments. The instructions to run it are pretty straightforeward just run the NextJs instructions bellow for such kind of project.
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
